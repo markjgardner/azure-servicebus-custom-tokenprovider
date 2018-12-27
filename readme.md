@@ -21,11 +21,11 @@ dotnet run
 This folder contains the definition for the infrastructure needed to run this example. The definition is written in [terraform](https://www.terraform.io/docs/providers/azurerm/index.html).
 
 The infrastructure is composed of:
-  * Two function apps which map to the solutions described above
+  * A function app for running the app described above
   * A servicebus namespace with a single topic
   * Three servicebus subscriptions each with a defined [correlation filter](https://docs.microsoft.com/en-us/azure/service-bus-messaging/topic-filters) that matches on ```CorrelationId == storeid```
-  * An application insights instance registered to both function apps
-  * A storage account used by the function apps
+  * An application insights instance registered to the function app
+  * A storage account used by the function app
 
 You can deploy the infrastructure by following these steps:
 ```bash
