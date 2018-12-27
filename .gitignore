@@ -416,3 +416,4 @@ $RECYCLE.BIN/
 
 local.settings.json
 *.tfvars
+backend.config.tf
