@@ -1,0 +1,28 @@
+{
+  "resourceUri": "/subscriptions/ae11b860-a23e-44ad-b37d-16053ab03c62/resourceGroups/mjgkfc-rg/providers/Microsoft.Web/sites/mjgkfc-fn",
+  "location": "East US 2",
+  "siteAuthSettings": {
+    "ValidateIssuer": false,
+    "ClientId": "a8b8a110-8f00-4e48-abc0-16ab4276fd0d",
+    "ClientSecret": "GKQgvhzO3Bs9o6bfqsePDC5wWVKE8jE6YtU+wiLePDw=",
+    "Issuer": "https://sts.windows.net/72f988bf-86f1-41af-91ab-2d7cd011db47",
+    "IsAadAutoProvisioned": false,
+    "AllowedAudiences": ["https://mjgkfc-fn.azurewebsites.net/.auth/login/aad/callback"],
+    "AllowedExternalRedirectUrls": [],
+    "UnauthenticatedClientAction": 0,
+    "TokenStoreEnabled": true,
+    "DefaultProvider": 0,
+    "Enabled": true,
+    "FacebookAppId": null,
+    "FacebookAppSecret": null,
+    "FacebookOAuthScopes": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
+    "GoogleClientId": null,
+    "GoogleClientSecret": null,
+    "GoogleOAuthScopes": [],
+    "MicrosoftAccountClientId": null,
+    "MicrosoftAccountClientSecret": null,
+    "MicrosoftAccountOAuthScopes": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
+    "TwitterConsumerKey": null,
+    "TwitterConsumerSecret": null
+  }
+}
