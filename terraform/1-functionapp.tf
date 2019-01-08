@@ -43,6 +43,8 @@ resource "azurerm_function_app" "fnapp" {
     APPINSIGHTS_INSTRUMENTATIONKEY = "${azurerm_application_insights.fnai.instrumentation_key}"
     AzureWebJobsServiceBus         = "${azurerm_servicebus_namespace_authorization_rule.fnsbnpolicy.primary_connection_string}"
     functionTopicName              = "${azurerm_servicebus_topic.fntopic.name}"
+    ServiceBusKey                  = "${azurerm_servicebus_namespace_authorization_rule.fnsbnpolicy.primary_key}"
+    ServiceBusKeyName              = "${azurerm_servicebus_namespace_authorization_rule.fnsbnpolicy.name}"
   }
 }
 
