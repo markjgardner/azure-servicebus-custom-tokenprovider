@@ -9,7 +9,7 @@ namespace microservice1 {
     [FunctionName("function1")]
     [return :ServiceBus("%functionTopicName%", Connection = "AzureWebJobsServiceBus")]
     public static Message function1 (
-      [HttpTrigger(AuthorizationLevel.Function, "get", Route = null)]HttpRequest req, 
+      [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)]HttpRequest req, 
       ILogger log
     ) {
       var message = new Message();

@@ -20,7 +20,7 @@ namespace microservice1 {
     
     [FunctionName("getServiceBusToken")]
     public static HttpResponseMessage getToken(
-      [HttpTrigger(AuthorizationLevel.Function, "get", Route = null)]HttpRequestMessage  req, 
+      [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)]HttpRequestMessage  req, 
       ClaimsPrincipal principal,
       ILogger log
     ) {
@@ -30,8 +30,8 @@ namespace microservice1 {
 
       var subscriptionUri = HttpUtility.ParseQueryString(req.RequestUri.ToString()).Get("subscriptionUri");
 
-      //Convert the TTL to a unix timestamp
-      var expires = DateTime.UtcNow - new DateTime(1970, 1, 1) + ttl;
+      //Convert the TTL to a unix epoch
+      var expires = Convert.ToString((Int64)(DateTime.UtcNow - new DateTime(1970, 1, 1) + ttl).TotalSeconds);
       string stringToSign = HttpUtility.UrlEncode(subscriptionUri) + "\n" + expires; 
       HMACSHA256 hmac = new HMACSHA256(Encoding.UTF8.GetBytes(servicebusKey)); 
 
