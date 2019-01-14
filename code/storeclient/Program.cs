@@ -3,13 +3,14 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.ServiceBus;
+using Microsoft.Azure.ServiceBus.Primitives;
 
 namespace storeclient
 {
     class Program
     {
         private static readonly string storeId = System.Environment.GetEnvironmentVariable("STOREID");
-        private static readonly string sbconnstr = System.Environment.GetEnvironmentVariable("SBCONNECTION");
+        private static readonly string sbUri = System.Environment.GetEnvironmentVariable("SBURI");
         private static readonly string topicName = System.Environment.GetEnvironmentVariable("SBTOPICNAME");
         private static string subscriptionName;
         private static ISubscriptionClient subscriptionClient;
@@ -19,7 +20,7 @@ namespace storeclient
             subscriptionName = $"storesub{storeId}";
 
             Console.WriteLine($"StoreId: {storeId}");
-            Console.WriteLine($"ServiceBus Connection: {sbconnstr}");
+            Console.WriteLine($"ServiceBus Connection: {sbUri}");
             Console.WriteLine($"Topic Name: {topicName}");
             Console.WriteLine($"Subscription Name: {subscriptionName}");
 
@@ -28,7 +29,7 @@ namespace storeclient
 
         static async Task MainAsync()
         {
-            subscriptionClient = new SubscriptionClient(sbconnstr, topicName, subscriptionName);
+            subscriptionClient = new SubscriptionClient(sbUri, topicName, subscriptionName, new customTokenProvder());
 
             Console.WriteLine("======================================================");
             Console.WriteLine("Press ENTER key to exit after receiving all the messages.");
