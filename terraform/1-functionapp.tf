@@ -59,6 +59,7 @@ resource "azurerm_template_deployment" "authsettings" {
     "servicePrincipalClientId"     = "${var.aadClientId}"
     "servicePrincipalClientSecret" = "${var.aadClientSecret}"
     "aadDirectoryId"               = "${data.azurerm_client_config.current.tenant_id}"
+    "nativeAppClientId"            = "${var.nativeAppClientId}"
   }
 }
 

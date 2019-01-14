@@ -13,6 +13,9 @@
     },
     "aadDirectoryId": {
       "type": "string"
+    },
+    "nativeAppClientId": {
+      "type": "string"
     }
   },
   "resources": [
@@ -29,7 +32,7 @@
           "clientSecret": "[parameters('servicePrincipalClientSecret')]",
           "issuer": "[concat('https://sts.windows.net/', parameters('aadDirectoryId'), '/')]",
           "IsAadAutoProvisioned": "false",
-          "AllowedAudiences": ["[concat('https://', parameters('functionAppName'), '.azurewebsites.net/.auth/login/aad/callback')]"],
+          "AllowedAudiences": ["[parameters('nativeAppClientId')]"],
           "UnauthenticatedClientAction": 0,
           "DefaultProvider": 0,
           "TokenStoreEnabled": true,

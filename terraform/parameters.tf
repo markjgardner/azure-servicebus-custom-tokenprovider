@@ -14,3 +14,7 @@ variable "aadClientId" {
 variable "aadClientSecret" {
   description = "The client secret to use when registering AAD as the authentication provider for the functionApp"
 }
+
+variable "nativeAppClientId" {
+  description = "The client id for the service principal associated with the client application"
+}
