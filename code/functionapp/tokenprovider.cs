@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System;
+using Microsoft.Azure.ServiceBus.Primitives;
 
 namespace microservice1 {
 
@@ -19,7 +20,7 @@ namespace microservice1 {
     private static string servicebusKeyName = Environment.GetEnvironmentVariable("ServiceBusKeyName");
     
     [FunctionName("getServiceBusToken")]
-    public static HttpResponseMessage getToken(
+    public static async Task<HttpResponseMessage> getToken(
       [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)]HttpRequestMessage  req, 
       ClaimsPrincipal principal,
       ILogger log
@@ -28,21 +29,11 @@ namespace microservice1 {
         return req.CreateResponse(HttpStatusCode.Unauthorized);  
       }
 
-      var subscriptionUri = HttpUtility.ParseQueryString(req.RequestUri.ToString()).Get("subscriptionUri");
-
-      //Convert the TTL to a unix epoch
-      var expires = Convert.ToString((Int64)(DateTime.UtcNow - new DateTime(1970, 1, 1) + ttl).TotalSeconds);
-      string stringToSign = HttpUtility.UrlEncode(subscriptionUri) + "\n" + expires; 
-      HMACSHA256 hmac = new HMACSHA256(Encoding.UTF8.GetBytes(servicebusKey)); 
-
-      //Sign the string
-      var signature = Convert.ToBase64String(hmac.ComputeHash(Encoding.UTF8.GetBytes(stringToSign))); 
-
-      //Construct the token
-      var sasToken = String.Format(CultureInfo.InvariantCulture, "sr={0}&sig={1}&se={2}&skn={3}",  
-          HttpUtility.UrlEncode(subscriptionUri), HttpUtility.UrlEncode(signature), expires, servicebusKeyName);
+      var sasProvider = TokenProvider.CreateSharedAccessSignatureTokenProvider(servicebusKeyName, servicebusKey, ttl);
+      var subscriptionUri = HttpUtility.ParseQueryString(req.RequestUri.Query).Get("subscriptionUri");
+      var sasToken = await sasProvider.GetTokenAsync(subscriptionUri, new TimeSpan(0,0,15));
       
-      return req.CreateResponse(HttpStatusCode.OK, sasToken);
+      return req.CreateResponse(HttpStatusCode.OK, sasToken.TokenValue);
     }
   }
 }
