@@ -4,6 +4,8 @@ locals {
   functionAppName = "${var.name}-fn"
 }
 
+data "azurerm_client_config" "current" {}
+
 resource "azurerm_resource_group" "fnrg" {
   name     = "${var.name}-rg"
   location = "${var.location}"
@@ -41,6 +43,23 @@ resource "azurerm_function_app" "fnapp" {
     APPINSIGHTS_INSTRUMENTATIONKEY = "${azurerm_application_insights.fnai.instrumentation_key}"
     AzureWebJobsServiceBus         = "${azurerm_servicebus_namespace_authorization_rule.fnsbnpolicy.primary_connection_string}"
     functionTopicName              = "${azurerm_servicebus_topic.fntopic.name}"
+    ServiceBusKey                  = "${azurerm_servicebus_namespace_authorization_rule.fnsbnpolicy.primary_key}"
+    ServiceBusKeyName              = "${azurerm_servicebus_namespace_authorization_rule.fnsbnpolicy.name}"
+  }
+}
+
+resource "azurerm_template_deployment" "authsettings" {
+  name                = "functionApp_AAD_auth_settings"
+  resource_group_name = "${azurerm_resource_group.fnrg.name}"
+  deployment_mode     = "incremental"
+  template_body       = "${file("functionapp_authentication_settings.json")}"
+
+  parameters = {
+    "functionAppName"              = "${azurerm_function_app.fnapp.name}"
+    "servicePrincipalClientId"     = "${var.aadClientId}"
+    "servicePrincipalClientSecret" = "${var.aadClientSecret}"
+    "aadDirectoryId"               = "${data.azurerm_client_config.current.tenant_id}"
+    "nativeAppClientId"            = "${var.nativeAppClientId}"
   }
 }
 

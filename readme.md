@@ -7,13 +7,19 @@ This azure function app exposes a single function ```function1``` which accepts 
 ### storeclient
 This client app listens to a store specific subscription and logs all messages as they are delivered. The application is a .net core console applicaiton and can be run from any workstation or vm. The application requires three environment variables in order to run:
   * ```STOREID``` - Unique store identifier, acceptable values are 0, 1 or 2 
-  * ```SBCONNECTION``` - The service bus connection string
+  * ```SBURI``` - The service bus endpoint URI
   * ```SBTOPICNAME``` - The service bus topic name associated with the target subscription
+  * ```TOKENPROVIDERURI``` - The URI to the Service Bus token provider
+  * ```AADTENANTID``` - The Azure AD tenantID to use when authenticating the user
+  * ```CLIENTID``` - The ClientID for the client application to use when authenticating the user
 
 ```bash
 export STOREID="0"
-export SBCONNECTION="Endpoint=sb://mynamespace.servicebus.windows.net/;SharedAccessKeyName=functionpolicy;SharedAccessKey=aOc1ONr0NwxNwnwPfJl1oK6YlCUDZIbjnH8kNj9v0vX="
+export SBURI="sb://mynamespace.servicebus.windows.net/"
 export SBTOPICNAME="functiontop"
+export TOKENPROVIDERURI="https://customtokenprovider.azurewebsites.net/api/getServiceBusToken"
+export AADTENANTID="00000000000-0000-0000-0000-0000000000000"
+export CLIENTID= "99999999-9999-9999-9999-999999999999"
 dotnet run
 ```
 

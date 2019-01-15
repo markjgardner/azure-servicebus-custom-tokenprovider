@@ -1,0 +1,44 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "functionAppName": {
+      "type": "string"
+    },
+    "servicePrincipalClientId": {
+      "type": "string"
+    },
+    "servicePrincipalClientSecret": {
+      "type": "string"
+    },
+    "aadDirectoryId": {
+      "type": "string"
+    },
+    "nativeAppClientId": {
+      "type": "string"
+    }
+  },
+  "resources": [
+    { 
+      "type": "Microsoft.Web/sites/config",
+      "name": "[concat(parameters('functionAppName'), '/web')]",
+      "apiVersion": "2018-11-01",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "siteAuthEnabled": "true",
+        "siteAuthSettings": {
+          "enabled" : "true",
+          "clientId": "[parameters('servicePrincipalClientId')]",
+          "clientSecret": "[parameters('servicePrincipalClientSecret')]",
+          "issuer": "[concat('https://sts.windows.net/', parameters('aadDirectoryId'), '/')]",
+          "IsAadAutoProvisioned": "false",
+          "AllowedAudiences": ["[parameters('nativeAppClientId')]"],
+          "UnauthenticatedClientAction": 0,
+          "DefaultProvider": 0,
+          "TokenStoreEnabled": true,
+          "ValidateIssuer": false
+        }
+      }
+    }
+  ]
+}
