@@ -13,7 +13,7 @@ namespace functionapp.tests {
   public class HttpTriggerTests {
 
     [Fact]
-    public void MessageMappingTest () {
+    public void function1_inputMapping_mapsQueryStringValues () {
       var logger = new Mock<ILogger> ();
 
       var querystring = new Dictionary<string, StringValues> ();
