@@ -5,7 +5,7 @@
 This azure function app exposes a single function ```function1``` which accepts HTTP GET requests and converts them into messages and publishes them to a ServiceBus topic. Requests should provide a ```message``` and ```storeid``` value via query string parameters.
 
 ### storeclient
-This client app listens to a store specific subscription and logs all messages as they are delivered. The application is a .net core console applicaiton and can be run from any workstation or vm. The application requires three environment variables in order to run:
+This client app listens to a store specific subscription and logs all messages as they are delivered. The application is a .net core console application and can be run from any workstation or vm. The application requires several environment variables in order to run:
   * ```STOREID``` - Unique store identifier, acceptable values are 0, 1 or 2 
   * ```SBURI``` - The service bus endpoint URI
   * ```SBTOPICNAME``` - The service bus topic name associated with the target subscription
@@ -27,11 +27,14 @@ dotnet run
 This folder contains the definition for the infrastructure needed to run this example. The definition is written in [terraform](https://www.terraform.io/docs/providers/azurerm/index.html).
 
 The infrastructure is composed of:
-  * A function app for running the app described above
+  * A function app for running the app described above\*
   * A servicebus namespace with a single topic
   * Three servicebus subscriptions each with a defined [correlation filter](https://docs.microsoft.com/en-us/azure/service-bus-messaging/topic-filters) that matches on ```CorrelationId == storeid```
   * An application insights instance registered to the function app
   * A storage account used by the function app
+
+  
+\* *Note that the infrastructure definition uses ARM to call an undocumented API for configuring Authentication on the Function App.*
 
 You can deploy the infrastructure by following these steps:
 ```bash
