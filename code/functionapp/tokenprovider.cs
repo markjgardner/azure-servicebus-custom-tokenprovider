@@ -15,7 +15,7 @@ using Microsoft.Azure.ServiceBus.Primitives;
 namespace microservice1 {
 
   public static class tokenProvider {
-    private static TimeSpan ttl = new TimeSpan(3600);
+    private static TimeSpan ttl = new TimeSpan(1,0,0);
     private static string servicebusKey = Environment.GetEnvironmentVariable("ServiceBusKey");
     private static string servicebusKeyName = Environment.GetEnvironmentVariable("ServiceBusKeyName");
     
