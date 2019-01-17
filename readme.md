@@ -4,6 +4,12 @@
 ### functionapp
 This azure function app exposes a single function ```function1``` which accepts HTTP GET requests and converts them into messages and publishes them to a ServiceBus topic. Requests should provide a ```message``` and ```storeid``` value via query string parameters.
 
+### functionapp.tests
+Contains unit test for the function app.
+
+### functionapp.integration
+Contains integration tests for the deployed application suite.
+
 ### storeclient
 This client app listens to a store specific subscription and logs all messages as they are delivered. The application is a .net core console application and can be run from any workstation or vm. The application requires several environment variables in order to run:
   * ```STOREID``` - Unique store identifier, acceptable values are 0, 1 or 2 
