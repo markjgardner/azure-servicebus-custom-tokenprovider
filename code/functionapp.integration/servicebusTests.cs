@@ -17,6 +17,7 @@ namespace functionapp.integration {
       var subname = $"store{storeid}";
       var subscription = new SubscriptionClient(sbconnection, sbtopicname, subname,ReceiveMode.PeekLock);
       var message = new Message(Encoding.UTF8.GetBytes(text));
+      message.CorrelationId = Convert.ToString(storeid);
 
       await topic.SendAsync(message);
       
