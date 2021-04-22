@@ -1,18 +1,12 @@
-using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs.Extensions.Http;
-using Microsoft.Extensions.Logging;
-using System.Globalization;
 using System.Net.Http;
 using System.Net;
 using System.Security.Claims;
-using System.Security.Cryptography;
-using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System;
-using Microsoft.Azure.ServiceBus.Primitives;
 
-namespace microservice1 {
+namespace microservice1
+{
 
   public static class tokenProvider {
     private static TimeSpan ttl = new TimeSpan(1,0,0);
